@@ -1,0 +1,27 @@
+{
+    "name": "qbus/contao-transient-form",
+    "description": "Create non-persistent, core-rendered forms using models.",
+    "type": "contao-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Alex Wuttke",
+            "email": "tech@qbus.de",
+            "homepage": "https://www.qbus.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "contao-community-alliance/composer-plugin": "~2.0",
+        "contao/core": "3.5.*",
+        "qbus/contao-transient-model": "~1.0"
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "": "system/modules/transient_form"
+            }
+        }
+    }
+}
