@@ -18,6 +18,8 @@
 ClassLoader::addClasses(array
 (
 	// Models
-	'Contao\\FormFieldModel'                  => 'system/modules/transient_form/models/FormFieldModel.php',
-	'Qbus\\TransientForm\\TransientFormModel' => 'system/modules/transient_form/models/TransientFormModel.php',
+	'Qbus\\TransientForm\\TransientFormFieldModel'  => 'system/modules/transient_form/models/TransientFormFieldModel.php',
+	'Qbus\\TransientForm\\TransientFormModel'       => 'system/modules/transient_form/models/TransientFormModel.php',
+	// Library
+	'Qbus\\TransientForm\\Hooks\\CompileFormFields' => 'system/modules/transient_form/library/TransientForm/Hooks/CompileFormFields.php',
 ));

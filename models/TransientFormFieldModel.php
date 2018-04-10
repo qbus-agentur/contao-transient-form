@@ -11,12 +11,14 @@
  * @license    LGPL-3.0+
  */
 
-namespace Contao;
+namespace Qbus\TransientForm;
 
+use Contao\Model\Registry;
+use Contao\Model\Collection;
 use Qbus\TransientModel\TransientModelTrait;
 use Qbus\TransientForm\TransientFormModel;
 
-class FormFieldModel extends \Model
+class TransientFormFieldModel extends \Model
 {
 	use TransientModelTrait;
 
@@ -26,44 +28,13 @@ class FormFieldModel extends \Model
 	 */
 	protected static $strTable = 'tl_form_field';
 
-	public static function findPublishedByPid($intPid, array $arrOptions=array())
-	{
-		if (!empty($arrOptions))
-		{
-			$blnHasOptions = true;
-		}
-
-		$t = static::$strTable;
-		$arrColumns = array("$t.pid=?");
-
-		if (!BE_USER_LOGGED_IN)
-		{
-			$arrColumns[] = "$t.invisible=''";
-		}
-
-		if (!isset($arrOptions['order']))
-		{
-			$arrOptions['order'] = "$t.sorting";
-		}
-
-		$objFormFieldCollection = static::findBy($arrColumns, $intPid, $arrOptions);
-
-		if ($objFormFieldCollection !== null)
-		{
-			return $objFormFieldCollection;
-		}
-
-		$objRegistry = Model\Registry::getInstance();
+	public static function findTransientByPid($intPid) {
+		$objRegistry = Registry::getInstance();
 		$objForm = $objRegistry->fetch(TransientFormModel::getTable(), $intPid);
 
 		if (!$objForm instanceof TransientFormModel)
 		{
 			return null;
-		}
-
-		if ($blnHasOptions)
-		{
-			trigger_error('Setting options is not supported for transient forms.', E_USER_WARNING);
 		}
 
 		$arrFormFields = $objForm->getFormFields();
@@ -81,7 +52,7 @@ class FormFieldModel extends \Model
 			}
 		}
 
-		return new Model\Collection($arrFormFieldObjects, static::$strTable);
+		return new Collection($arrFormFieldObjects, static::$strTable);
 	}
 
 }
