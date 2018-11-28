@@ -16,13 +16,20 @@ use Qbus\TransientForm\TransientFormModel;
 use Qbus\TransientForm\TransientFormFieldModel;
 
 /*
- * TODO
+ * Add form fields to a transient form during form generation
  */
 class CompileFormFields
 {
 
 	/*
-	 * TODO
+	 * Get transient form fields that belong to the form and add them to
+	 * $arrFields
+	 *
+	 * @param array       $arrFields The form's fields (model objects)
+	 * @param string      $formId    The form ID
+	 * @param Contao\Form $objForm   The form object
+	 *
+	 * @return array The form's fields with transient form fields added
 	 */
 	function getTransientFormFields($arrFields, $formId, $objForm) {
 		$objFormModel = $objForm->getModel();

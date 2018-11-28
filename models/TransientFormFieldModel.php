@@ -18,6 +18,9 @@ use Contao\Model\Collection;
 use Qbus\TransientModel\TransientModelTrait;
 use Qbus\TransientForm\TransientFormModel;
 
+/**
+ * FormFieldModels without database persistence
+ */
 class TransientFormFieldModel extends \Model
 {
 	use TransientModelTrait;
@@ -28,6 +31,13 @@ class TransientFormFieldModel extends \Model
 	 */
 	protected static $strTable = 'tl_form_field';
 
+	/**
+	 * Retrieve form fields that belong to a form by that form's ID
+	 *
+	 * @param int $intPid Parent form ID
+	 *
+	 * @return Model\Collection Collection of form field model objects
+	 */
 	public static function findTransientByPid($intPid) {
 		$objRegistry = Registry::getInstance();
 		$objForm = $objRegistry->fetch(TransientFormModel::getTable(), $intPid);
