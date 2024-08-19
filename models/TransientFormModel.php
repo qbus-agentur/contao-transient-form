@@ -12,12 +12,13 @@
 
 namespace Qbus\TransientForm;
 
+use Contao\FormModel;
 use Qbus\TransientModel\TransientModelTrait;
 
 /**
  * FormModels without database persistence
  */
-class TransientFormModel extends \FormModel
+class TransientFormModel extends FormModel
 {
 	use TransientModelTrait;
 

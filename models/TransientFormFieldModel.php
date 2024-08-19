@@ -13,6 +13,7 @@
 
 namespace Qbus\TransientForm;
 
+use Contao\Model;
 use Contao\Model\Registry;
 use Contao\Model\Collection;
 use Qbus\TransientModel\TransientModelTrait;
@@ -21,7 +22,7 @@ use Qbus\TransientForm\TransientFormModel;
 /**
  * FormFieldModels without database persistence
  */
-class TransientFormFieldModel extends \Model
+class TransientFormFieldModel extends Model
 {
 	use TransientModelTrait;
 
