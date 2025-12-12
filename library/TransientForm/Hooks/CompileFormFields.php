@@ -12,6 +12,9 @@
 
 namespace Qbus\TransientForm\Hooks;
 
+use Contao\FormFieldModel;
+use Contao\FormModel;
+use Contao\Model\Registry;
 use Qbus\TransientForm\TransientFormModel;
 use Qbus\TransientForm\TransientFormFieldModel;
 
@@ -33,11 +36,18 @@ class CompileFormFields
 	 */
 	function getTransientFormFields($arrFields, $formId, $objForm) {
 		$objFormModel = $objForm->getModel();
+		if ($objFormModel === null) {
+			$objFormModel = FormModel::findByPk($objForm->id);
+		}
 		$objFields = TransientFormFieldModel::findTransientByPid($objFormModel->id);
 
 		// Do it exactly the way the core does
 		if ($objFields !== null) {
 			while ($objFields->next()) {
+				$transientFormFieldModel = $objFields->current();
+				Registry::getInstance()->unregister($transientFormFieldModel);
+				$formFieldModel = new FormFieldModel($transientFormFieldModel->row());
+				$formFieldModel->pid = $objForm->id;
 				// Ignore the name of form fields which do not use a name
 				// (see contao/core-bundle #1268)
 				if (
@@ -45,10 +55,10 @@ class CompileFormFields
 					&& isset($GLOBALS['TL_DCA']['tl_form_field']['palettes'][$objFields->type])
 					&& preg_match('/[,;]name[,;]/', $GLOBALS['TL_DCA']['tl_form_field']['palettes'][$objFields->type])
 				) {
-					$arrFields[$objFields->name] = $objFields->current();
+					$arrFields[$objFields->name] = $formFieldModel;
 				}
 				else {
-					$arrFields[] = $objFields->current();
+					$arrFields[] = $formFieldModel;
 				}
 			}
 		}
